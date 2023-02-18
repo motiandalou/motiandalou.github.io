@@ -18,17 +18,17 @@
   <link 
     rel="icon" 
     href="/">
-  <title>Hello World</title>
+  <title>笔记</title>
   
     
       <meta 
         property="og:title" 
-        content="Hello World">
+        content="笔记">
     
     
       <meta 
         property="og:url" 
-        content="http://example.com/2022/12/28/hello-world/index.html">
+        content="http://example.com/2023/02/18/flex%E5%B8%83%E5%B1%80/index.html">
     
     
       <meta 
@@ -42,10 +42,10 @@
         content="article">
       <meta 
         property="og:article:published_time" 
-        content="2022-12-28">
+        content="2023-02-18">
       <meta 
         property="og:article:modified_time" 
-        content="2022-12-28">
+        content="2023-02-18">
       <meta 
         property="og:article:author" 
         content="theme-kaze">
@@ -311,7 +311,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+
       </div>
     </article>
   
@@ -352,21 +352,21 @@
 <article class="card card-content">
   <header>
     <h1 class="post-title">
-      Hello World
+      笔记
     </h1>
   </header>
   <div class="post-meta post-show-meta">
-    <time datetime="2022-12-28T15:28:26.111Z">
+    <time datetime="2023-02-17T16:00:00.000Z">
       <i 
         class="iconfont icon-calendar" 
         style="margin-right: 2px;">
       </i>
-      <span>2022-12-28</span>
+      <span>2023-02-18</span>
     </time>
     
     
       <span class="dot"></span>
-      <span>75 字</span>
+      <span>1.8k 字</span>
     
   </div>
   
@@ -374,19 +374,128 @@
   <div 
     id="section" 
     class="post-content">
-    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="highlight"><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre>
+    <blockquote>
+<p>display:flex 布局在平常 PC 端和手机端,对于其可视化区域的适配发挥着比较重要的作用,是一个我们通常会频繁使用的布局方式.<br>接下来记录一下我在日常前端开发中接触到的属性,一共 7 个</p>
+</blockquote>
+<ol>
+<li>flex-direction(极常用)</li>
+<li>flex-wrap(极常用)</li>
+<li>justify-content(极常用)</li>
+<li>align-items(极常用)</li>
+<li>align-content(极常用)</li>
+<li>align-self(一般性使用)</li>
+<li>flex(不常用,难点)</li>
+</ol>
+<hr>
+<blockquote>
+<ol>
+<li>flex-direction</li>
+</ol>
+</blockquote>
+<pre class="highlight"><span class="line">语法: flex-direction: row(默认值) | row-reverse | column | column-reverse</span><br></pre>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="highlight"><span class="line">$ hexo server</span><br></pre>
+<ol>
+<li>row：横向从左到右排列（左对齐），默认的排列方式。</li>
+<li>row-reverse：反转横向排列（右对齐，从后往前排，最后一项排在最前面。</li>
+<li>column：纵向排列。</li>
+<li>column-reverse：反转纵向排列，从后往前排，最后一项排在最上面。</li>
+</ol>
+<hr>
+<blockquote>
+<ol start="2">
+<li>flex-wrap 属性用于指定弹性盒子的子元素换行方式。</li>
+</ol>
+</blockquote>
+<pre class="highlight"><span class="line">语法: flex-wrap: nowrap(默认值)|wrap|wrap-reverse|initial|inherit;</span><br></pre>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="highlight"><span class="line">$ hexo generate</span><br></pre>
+<ol>
+<li>nowrap - 默认不换行， 弹性容器为单行。该情况下弹性子项可能会溢出容器。</li>
+<li>wrap - 换行,弹性容器为多行。该情况下弹性子项溢出的部分会被放置到新行，子项内部会发生断行</li>
+<li>wrap-reverse -换行且反转,即反转 wrap 排列。</li>
+</ol>
+<hr>
+<blockquote>
+<ol start="3">
+<li>justify-content 内容对齐 属性应用在弹性容器上，把弹性项沿着弹性容器的主轴线（main axis）对齐。</li>
+</ol>
+</blockquote>
+<pre class="highlight"><span class="line">语法: justify-content: flex-start | flex-end | center | space-between | space-around</span><br></pre>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="highlight"><span class="line">$ hexo deploy</span><br></pre>
+<ol>
+<li>flex-start：弹性项目向行头紧挨着填充。这个是默认值。第一个弹性项的 main-start 外边距边线被放置在该行的 main-start 边线，而后续弹性项依次平齐摆放。</li>
+<li>flex-end：弹性项目向行尾紧挨着填充。第一个弹性项的 main-end 外边距边线被放置在该行的 main-end 边线，而后续弹性项依次平齐摆放。</li>
+<li>center：弹性项目居中紧挨着填充。（如果剩余的自由空间是负的，则弹性项目将在两个方向上同时溢出）。</li>
+<li>space-between：弹性项目平均分布在该行上。如果剩余空间为负或者只有一个弹性项，则该值等同于 flex-start。否则，第 1 个弹性项的外边距和行的 main-start 边线对齐，而最后 1 个弹性项的外边距和行的 main-end 边线对齐，然后剩余的弹性项分布在该行上，相邻项目的间隔相等。</li>
+<li>space-around：弹性项目平均分布在该行上，两边留有一半的间隔空间。如果剩余空间为负或者只有一个弹性项，则该值等同于 center。否则，弹性项目沿该行分布，且彼此间隔相等（比如是 20px），同时首尾两边和弹性容器之间留有一半的间隔（1&#x2F;2*20px&#x3D;10px）。</li>
+</ol>
+<hr>
+<blockquote>
+<ol start="4">
+<li>align-items 设置或检索弹性盒子元素在侧轴（纵轴）方向上的对齐方式。</li>
+</ol>
+</blockquote>
+<pre class="highlight"><span class="line">语法: align-items: flex-start | flex-end | center | baseline | stretch</span><br></pre>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<ol>
+<li>flex-start：弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴起始边界。</li>
+<li>flex-end：弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴结束边界。</li>
+<li>center：弹性盒子元素在该行的侧轴（纵轴）上居中放置。（如果该行的尺寸小于弹性盒子元素的尺寸，则会向两个方向溢出相同的长度）。</li>
+<li>baseline：如弹性盒子元素的行内轴与侧轴为同一条，则该值与’flex-start’等效。其它情况下，该值将参与基线对齐。</li>
+<li>stretch：如果指定侧轴大小的属性值为’auto’，则其值会使项目的边距盒的尺寸尽可能接近所在行的尺寸，但同时会遵照’min&#x2F;max-width&#x2F;height’属性的限制。</li>
+</ol>
+<blockquote>
+<ol start="5">
+<li>align-content 属性用于修改 flex-wrap 属性的行为。类似于 align-items, 但它不是设置弹性子元素的对齐，而是设置各个行的对齐。</li>
+</ol>
+</blockquote>
+<pre class="highlight"><span class="line">语法: flex-start | flex-end | center | space-between | space-around | stretch</span><br></pre>
+
+<ol>
+<li>stretch - 默认。各行将会伸展以占用剩余的空间。</li>
+<li>flex-start - 各行向弹性盒容器的起始位置堆叠。</li>
+<li>flex-end - 各行向弹性盒容器的结束位置堆叠。</li>
+<li>center -各行向弹性盒容器的中间位置堆叠。</li>
+<li>space-between -各行在弹性盒容器中平均分布。</li>
+<li>space-around - 各行在弹性盒容器中平均分布，两端保留子元素与子元素之间间距大小的一半。</li>
+</ol>
+<hr>
+<blockquote>
+<ol start="6">
+<li>align-self 属性用于设置弹性元素自身在侧轴（纵轴）方向上的对齐方式。</li>
+</ol>
+</blockquote>
+<pre class="highlight"><span class="line">语法: auto | flex-start | flex-end | center | baseline | stretch</span><br></pre>
+
+<ol>
+<li>auto：如果’align-self’的值为’auto’，则其计算值为元素的父元素的’align-items’值，如果其没有父元素，则计算值为’stretch’。</li>
+<li>flex-start：弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴起始边界。</li>
+<li>flex-end：弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴结束边界。</li>
+<li>center：弹性盒子元素在该行的侧轴（纵轴）上居中放置。（如果该行的尺寸小于弹性盒子元素的尺寸，则会向两个方向溢出相同的长度）。</li>
+<li>baseline：如弹性盒子元素的行内轴与侧轴为同一条，则该值与’flex-start’等效。其它情况下，该值将参与基线对齐。</li>
+<li>stretch：如果指定侧轴大小的属性值为’auto’，则其值会使项目的边距盒的尺寸尽可能接近所在行的尺寸，但同时会遵照’min&#x2F;max-width&#x2F;height’属性的限制。</li>
+</ol>
+<hr>
+<blockquote>
+<ol start="7">
+<li>flex 属性用于指定弹性子元素如何分配空间。</li>
+</ol>
+</blockquote>
+<pre class="highlight"><span class="line">语法: flex: auto | initial | none | inherit |  [ flex-grow ] || [ flex-shrink ] || [ flex-basis ]</span><br></pre>
+
+<ol>
+<li>flex-start：弹性项目向行头紧挨着填充。这个是默认值。第一个弹性项的 main-start 外边距边线被放置在该行的 main-start 边线，而后续弹性项依次平齐摆放。</li>
+<li>flex-end：弹性项目向行尾紧挨着填充。第一个弹性项的 main-end 外边距边线被放置在该行的 main-end 边线，而后续弹性项依次平齐摆放。</li>
+<li>center：弹性项目居中紧挨着填充。（如果剩余的自由空间是负的，则弹性项目将在两个方向上同时溢出）。</li>
+<li>space-between：弹性项目平均分布在该行上。如果剩余空间为负或者只有一个弹性项，则该值等同于 flex-start。否则，第 1 个弹性项的外边距和行的 main-start 边线对齐，而最后 1 个弹性项的外边距和行的 main-end 边线对齐，然后剩余的弹性项分布在该行上，相邻项目的间隔相等。</li>
+<li>space-around：弹性项目平均分布在该行上，两边留有一半的间隔空间。如果剩余空间为负或者只有一个弹性项，则该值等同于 center。否则，弹性项目沿该行分布，且彼此间隔相等（比如是 20px），同时首尾两边和弹性容器之间留有一半的间隔（1&#x2F;2*20px&#x3D;10px）。</li>
+</ol>
+<blockquote>
+<p>日常前端开发需要注意的点</p>
+</blockquote>
+<ol>
+<li>flex 布局使用的话,float 浮动就会失效,但是定位不会,可以继续用</li>
+<li>难点是 flex 的使用</li>
+</ol>
 
   </div>
   <div>
@@ -406,8 +515,8 @@
           <span style="font-weight: bold;">文章链接：</span><a 
             target="_blank" 
             rel="nofollow noopener noreferrer" 
-            href="http://example.com/2022/12/28/hello-world/">
-            http://example.com/2022/12/28/hello-world/
+            href="http://example.com/2023/02/18/flex%E5%B8%83%E5%B1%80/">
+            http://example.com/2023/02/18/flex%E5%B8%83%E5%B1%80/
           </a>
         </p>
         <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
@@ -417,20 +526,20 @@
 </article>
 <div class="nav">
   
-    <div class="nav-item-prev">
+  
+    <div class="nav-item-next">
       <a 
-        href="/2023/02/18/flex%E5%B8%83%E5%B1%80/" 
+        href="/2022/12/28/hello-world/" 
         class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
         <div>
-          <div class="nav-label">上一篇</div>
+          <div class="nav-label">下一篇</div>
           
-            <div class="nav-title">笔记 </div>
+            <div class="nav-title">Hello World </div>
           
         </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
       </a>
     </div>
-  
   
 </div>
 
@@ -443,7 +552,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+
 </div>
             </main>
             <aside class="right-column">
@@ -457,7 +566,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+
     </article>
   
   
