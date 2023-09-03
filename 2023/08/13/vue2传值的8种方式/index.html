@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="Hexo">
+  <link 
+    rel="icon" 
+    href="/">
+  <title>vue2传值的8种方式</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="vue2传值的8种方式">
+    
+    
+      <meta 
+        property="og:url" 
+        content="http://example.com/2023/08/13/vue2%E4%BC%A0%E5%80%BC%E7%9A%848%E7%A7%8D%E6%96%B9%E5%BC%8F/index.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="https://img.songhn.com/img/Y67gdd.png">
+    
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2023-08-13">
+      <meta 
+        property="og:article:modified_time" 
+        content="2023-08-13">
+      <meta 
+        property="og:article:author" 
+        content="姜伟">
+      
+        
+      
+    
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  <link rel="preload" href="/css/main.css" as="style" >
+  
+  <link rel="modulepreload" href="//instant.page/5.1.0">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+  
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-logo-main" href="/">
+      
+      <span class="navbar-logo-dsc">博客</span>
+      </a>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          首页
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          归档
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          标签
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          分类
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          关于
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          友链
+        
+      </a>
+    
+    <button 
+      class="navbar-menu-item darknavbar navbar-menu-btn" 
+      aria-label="Toggle dark mode"
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </button>
+    <button 
+      class="navbar-menu-item searchnavbar navbar-menu-btn" 
+      aria-label="Toggle search"
+      id="search">
+      <!-- <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
+          d="M283.64 283.64L336 336"></path>
+      </svg>
+    </button>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="https://img.songhn.com/img/Y67gdd.png" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">姜伟</p>
+<p class="author-description"></p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>11</span>
+    <span>文章</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>4</span>
+    <span>分类</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>0</span>
+    <span>标签</span>
+  </a>
+</div>
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>分类
+  </div>
+  <div class="categories-list">
+    
+      <a href="/categories/React-Native/">
+        <div class="categories-list-item">
+          React-Native
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/CSS/">
+        <div class="categories-list-item">
+          CSS
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Vue2/">
+        <div class="categories-list-item">
+          Vue2
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/%E5%9F%BA%E9%87%91/">
+        <div class="categories-list-item">
+          基金
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>热门标签
+  </div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <main class="main-column">
+              
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      vue2传值的8种方式
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-08-12T16:00:00.000Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2023-08-13</span>
+    </time>
+    
+      <span class="dot"></span>
+      
+        <a 
+          href="/categories/Vue2/" 
+          class="post-meta-link">
+          Vue2
+        </a>
+      
+    
+    
+      <span class="dot"></span>
+      <span>2.4k 字</span>
+    
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <p>总结:<br>常见使用场景可以分为三类:</p>
+<p>(1). 这 8 种方式我在项目中非常常用,但是也要根据情况而定,啥都用的话,数据不好管理,多人开发,项目非常大的话,像我们公司按年为单位来计算的开发迭代项目,时间长的话,就成屎山了.<br>(2). 我个人算是个极简主义者,代码量和代码方式,越简单越好,这样越方便管理,一个功能的实现逻辑和方式有很多,团队的话,商量之后,尽量用一种.这样你同事请假,今天必须帮他改个 bug,这种开发成本就最低了.同伙之间平时多沟通.<br>(3). 团队合作,代码方便管理永远放第一位.</p>
+<hr>
+<ol>
+<li>父子组件通信: 5 个: props; $parent &#x2F; $children; provide &#x2F; inject ; ref ; $attrs &#x2F; $listeners</li>
+<li>兄弟组件通信: 2 个<br>eventBus Vuex ,子&gt;&gt;父&gt;&gt;子(不推荐多层嵌套)</li>
+<li>跨级通信: 4 个<br>eventBus Vuex provide &#x2F; inject 、$attrs &#x2F; $listeners</li>
+</ol>
+<hr>
+<p>第一种: 父子组件传值:props 子父组件传值:$emit<br>第二种: $children &#x2F; $parent<br>第三种: provide&#x2F; inject 局部刷新<br>第四种: ref &#x2F; refs<br>第五种: eventBus<br>第六种: Vuex<br>第七种: localStorage &#x2F; sessionStorage<br>第八种: $attrs 与 $listeners</p>
+<hr>
+<p>第一种:父子组件传值 子父组件传值<br>父子组件传值: props<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/1.png" class="lozad post-image"src="/images/1.png"></p>
+<p>子父组件传值: $emit<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/2.png" class="lozad post-image"src="/images/2.png"></p>
+<p>父子组件传值进阶版:<br>修饰符<br><code>&lt;HelloWorld :money.sync=&quot;dataApp&quot;&gt;&lt;/HelloWorld&gt;</code><br>等同于:两句作用等同<br><code>&lt;HelloWorld :money=&quot;dataApp&quot; v-on:update:money=&quot;dataApp = $event&quot;/&gt;</code><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/3.png" class="lozad post-image"src="/images/3.png"></p>
+<hr>
+<p>第二种:$children &#x2F; $parent  只能进行父子组件之间进行传值<br>父子组件可以相互之间获取彼此之间所有的方法和data,就像访问一样<br>子组件访问父组件: this.$parent<br>父组件访问子组件: this.$children[0]<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/4.png" class="lozad post-image"src="/images/4.png"></p>
+<hr>
+<p>第三种: provide&#x2F; inject<br>概念:<br>provide&#x2F; inject 是 vue2.2.0 新增的 api, 简单来说就是父组件中通过 provide 来提供变量, 然后再子组件中通过 inject 来注入变量。<br>注意: 这里不论子组件嵌套有多深, 只要调用了 inject 那么就可以注入 provide 中的数据，而不局限于只能从当前父组件的 props 属性中回去数据<br>举例:一共三个组件 A–&gt;B–&gt;–C (A 是父组件 B 是子组件 C 是孙组件) A 组件 provide 注入一个值,B 组件,C 组件 inject 都可以获取到该值.<br>优点:不局限于父子组件传值,父孙传值也可以实现.不用写 props.<br>缺点:父孙传值多了个没用的子组件.<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/5.png" class="lozad post-image"src="/images/5.png"></p>
+<p>如果多人开发,可以配合 mixin 混合组件开发</p>
+<hr>
+<p>第四种:ref &#x2F; refs<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/goloving/p/9404099.html">https://www.cnblogs.com/goloving/p/9404099.html</a><br>两种方式:<br>ref：<br>第一种方式:如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；<br>普通的元素分为:<br>ref 作用在子组件外面的元素上,都是指向 dom 元素,不同 this 指向父组件实例<br>ref 作用在子组件里面面的元素上,都是指向 dom 元素,不同 this 指向子组件实例</p>
+<p>第二种方式:如果用在子组件上，引用就指向组件实例，可以通过实例直接调用组件的方法或访问数据，<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/6.png" class="lozad post-image"src="/images/6.png"><br>工作实战:如何利用 v-for 和 ref 获取一组数组或者 dom 节点(比如 类似多个饿了么手风琴)<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/7.png" class="lozad post-image"src="/images/7.png"></p>
+<hr>
+<p>第五种:eventBus<br>所有组件共用相同的事件中心，可以向该中心注册发送事件或接收事件，所有组件都可以通知其他组件。<br>缺点:当项目较大,就容易造成难以维护的灾难.(可能自己都找不到自己写的发送事件)</p>
+<p>使用方式:<br>情况描述:eventBus,当第一次通过路由跳转页面的时候控制台是没有任何输出的，只有第二次跳转开始控制台才有输出</p>
+<p>原因:vue-router 切换的时候，会先加载新的组件，当新的组件渲染好但是还没 mount 的时候，销毁旧组件，然后再挂载新组件，也就是说当 B 页面的生命周期进行到 beforeMount 的时候，下一步走到的就是 A 页面的 beforeDestory 方法和接下去的 destroyed 方法<br>eventBus 的执行生命周期:<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/8.png" class="lozad post-image"src="/images/8.png"></p>
+<p>解析:<br>其实，可以通过结果清楚看到，当我们还在页面 A 的时候，页面 B 还没生成，也就是页面 B 中的 created 中所监听的来自于 A 中的事件还没有被触发。这个时候当你 A 中 emit 事件的时候，B 其实是没有监听到的。<br>再看一下，红色的是 B 页面组件，当你从页面 A 到页面 B 跳转的时候，发生了什么？首先是先 B 组件先 created 然后 beforeMount 接着 A 组件才被销毁，A 组件才执行 beforeDestory，以及 destoryed.<br>所以，我们可以把 A 页面组件中的 emit 事件写在 beforeDestory 中去。因为这个时候，B 页面组件已经被 created 了，也就是我们写的$on事件已经触发了<br>所以可以，在beforeDestory的时候，$emit 事件。</p>
+<pre class="highlight"><span class="line">第一步:在 main.js 里面全局定义:</span><br><span class="line">//全局定义，可以将 eventBus 绑定到 vue 实例的原型上,也可以直接绑定到 window 对象上.</span><br><span class="line">Vue.prototype.$EventBus = new Vue();</span><br><span class="line"></span><br><span class="line">第二步:在想要发送信息的页面,发送事件</span><br><span class="line">beforeDestroy() &#123;</span><br><span class="line">// 第一种办法:</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">//传多个值,用&#123;&#125;包裹键值对</span><br><span class="line">this.$EventBus.$emit(&quot;new&quot;, &quot;lsy&quot;);</span><br><span class="line">&#125;, 0);</span><br><span class="line">// 第二种办法:</span><br><span class="line">this.$nextTick(()=&gt;&#123;</span><br><span class="line">      //传多个值,用&#123;&#125;包裹键值对</span><br><span class="line">      this.$EventBus.$emit(&quot;new&quot;, &quot;lsy&quot;);</span><br><span class="line">&#125;)</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">第三步:在想要获取信息的页面,获取信息</span><br><span class="line">mounted() &#123;</span><br><span class="line">//必须要在 mounted 以及之前的周期里面写,不然获取不到 eventbus 信息</span><br><span class="line">//这里不用箭头函数的话,this 会丢失.也可以先保存一份:</span><br><span class="line">this.$EventBus.$on(&quot;new&quot;, (e) =&gt; &#123;</span><br><span class="line">this.name = e;</span><br><span class="line">console.log(e);</span><br><span class="line">&#125;);</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">beforeDestroy() &#123;</span><br><span class="line">//移除监听</span><br><span class="line">//on 事件是不会自动清除的，也就是说你切换的次数越多 on 监听也会越来越</span><br><span class="line">//多，解决的方法是需要在 B 页面的 beforeDestroy 里面手动使用 on 监听也会</span><br><span class="line">//越来越多，解决的方法是需要在 B 页面的 beforeDestroy 里面手动使用 off</span><br><span class="line">//去关闭监听:</span><br><span class="line">this.$EventBus.$off(&quot;new&quot;, &quot;&quot;);</span><br><span class="line">&#125;,</span><br></pre>
+
+<hr>
+<p>第六种:Vuex<br>Vuex 是什么?<br>Vuex 是一个专为 Vue 程序开发的状态管理模式。<br>Vuex 解决了什么问题?<br>两个问题:<br>问题一:多个视图依赖于同一状态<br>问题二:来自不同视图的行为需要变更同一状态<br>将开发者的精力聚焦于数据的更新而不是数据在组件之间的传递上</p>
+<p>Vuex 详细 5 个模块:<br>1.state: 将需要进行管理的共享数据，放入 state 中，使其形似为全局变量(全局状态)<br>2.getters: 相当于 computed 计算属性，用于加工处理 state 状态数据，有其两个默认参数，第一个默认参数为 state，第二个默认参数为 getters。条件:如果很多组件都使用这个过滤后的数据.<br>3.mutations: 同步提交数据<br>4.actions: actions 的异步操作<br>5.modules: 模块化 Vuex，为了方便后期对于项目的管理，可以让每一个模块拥有自己的 state、mutation、action、getters,使得结构非常清晰，方便管理。</p>
+<p>index.js<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/9.png" class="lozad post-image"src="/images/9.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/10.png" class="lozad post-image"src="/images/10.png"><br>模块化:<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/11.png" class="lozad post-image"src="/images/11.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/12.png" class="lozad post-image"src="/images/12.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/13.png" class="lozad post-image"src="/images/13.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/14.png" class="lozad post-image"src="/images/14.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/15.png" class="lozad post-image"src="/images/15.png"></p>
+<hr>
+<p>第七种:localStorage &#x2F; sessionStorage<br>缺点:这种通信比较简单,缺点是数据和状态比较混乱,不太容易维护。<br>解决方法:localStorage &#x2F; sessionStorage 可以结合 Vuex, 实现数据的持久保存,同时使用 Vuex 解决数据和状态混乱问题.实际工作中也就是这么用.<br>业务情景 1: 1.填写表单数据,点击提交按钮,然后将 v-model 获取的表单数据,本地存储到本地. 2.再将值放到 Vuex 里面也进行保存一份<br>3.Vuex,里面的 state.就很清晰的管理全局状态了.同时再次初始化的时候,会优先使用本地存储. 4.实际工作中,可能是后端返回给你前端的一个 token,用来验证登录的.你每次用这个用来登录用.<br>举例用法:<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/16.png" class="lozad post-image"src="/images/16.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/17.png" class="lozad post-image"src="/images/17.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/18.png" class="lozad post-image"src="/images/18.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/19.png" class="lozad post-image"src="/images/19.png"></p>
+<hr>
+<p>第八种: $attrs 与 $listeners<br>解决问题:隔代组件传参:X 套 Y,Y 套 Z X 传属性值给 Z 或者 Z 传方法给 X(实际也是传值) 这样就实现双向隔代传值<br>正常思路:<br>思路一:使用 props 绑定来进行一级一级的信息传递, 如果 D 组件中状态改变需要传递数据给 A, 使用事件系统一级级往上传递<br>思路二:使用 eventBus,这种情况下还是比较适合使用, 但是碰到多人合作开发时, 代码维护性较低, 可读性也低<br>思路三:使用 Vuex 来进行数据管理, 但是如果仅仅是传递数据, 而不做中间处理,使用 Vuex 处理感觉有点大材小用了.</p>
+<p>正向:$attrs<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/20.png" class="lozad post-image"src="/images/20.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/21.png" class="lozad post-image"src="/images/21.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/22.png" class="lozad post-image"src="/images/22.png"></p>
+<p>逆向:$listeners<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/23.png" class="lozad post-image"src="/images/23.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/24.png" class="lozad post-image"src="/images/24.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/images/25.png" class="lozad post-image"src="/images/25.png"></p>
+<p>关于 Vue 的 inheritAttrs 的理解,<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38211541/article/details/105824684">https://blog.csdn.net/qq_38211541/article/details/105824684</a><br>自己总结:现在要 X 通过$attrs属性传值,Z组件会接收到所有的属性,两种情况:<br>情况一:当inheritAttrs&#x3D;true Z组件会接收到所有的属性<br>情况二:当inheritAttrs&#x3D;false  Z组件不会接收到任何属性<br>inheritAttrs&#x3D;true&#x2F;false都不会影响$attrs 传值.都有值.只是子组件 DOM 节点上是否继承父组件的属性<br>用法:加在 Y,Z 继承组件上.</p>
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            姜伟
+          </a>
+        </p>
+        <!-- <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="http://example.com/2023/08/13/vue2%E4%BC%A0%E5%80%BC%E7%9A%848%E7%A7%8D%E6%96%B9%E5%BC%8F/">
+            http://example.com/2023/08/13/vue2%E4%BC%A0%E5%80%BC%E7%9A%848%E7%A7%8D%E6%96%B9%E5%BC%8F/
+          </a>
+        </p> -->
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+    <div class="nav-item-prev">
+      <a 
+        href="/2023/08/20/vue2%E4%B8%89%E4%B8%AA%E4%B8%BB%E8%A6%81%E6%96%87%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/" 
+        class="nav-link">
+        <i class="iconfont icon-left nav-prev-icon"></i>
+        <div>
+          <div class="nav-label">上一篇</div>
+          
+            <div class="nav-title">vue2 index.html / App.vue / main.js 三者作用 </div>
+          
+        </div>
+      </a>
+    </div>
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/2023/07/30/%E5%9F%BA%E9%87%91%E7%BB%84%E5%90%88/" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">下一篇</div>
+          
+            <div class="nav-title">基金组合的力量 </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+
+</div>
+            </main>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>最近文章
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-09-03</div>
+        <a href="/2023/09/03/%E4%B8%BB%E9%A2%98%E6%8D%A2%E8%82%A4/"><div class="recent-posts-item-content">主题换肤</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-08-27</div>
+        <a href="/2023/08/27/React%20Native%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA,%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA,%E5%BC%80%E5%8F%91%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91,%E6%89%93%E5%8C%85,%E5%8F%91%E5%B8%83/"><div class="recent-posts-item-content">RN 环境搭建,项目创建,开发中遇到的坑,打包,发布</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-08-20</div>
+        <a href="/2023/08/20/vue2%E4%B8%89%E4%B8%AA%E4%B8%BB%E8%A6%81%E6%96%87%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/"><div class="recent-posts-item-content">vue2 index.html / App.vue / main.js 三者作用</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-08-13</div>
+        <a href="/2023/08/13/vue2%E4%BC%A0%E5%80%BC%E7%9A%848%E7%A7%8D%E6%96%B9%E5%BC%8F/"><div class="recent-posts-item-content">vue2传值的8种方式</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2020
+          
+          
+                - 
+                2023
+          
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          博客
+        </a>
+      </div>
+    </div>
+
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+ 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+    
+      <script> 
+        loadScript('/js/lib/busuanzi.min.js') 
+      </script>
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+    
+    <script src="//instant.page/5.1.0" type="module"
+      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+    
+    
+      <script>
+        setTimeout(() => {localSearch("search.json")}, 0)
+      </script>
+    
+  </body>
+</html>

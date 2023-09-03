@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="Hexo">
+  <link 
+    rel="icon" 
+    href="/">
+  <title>filter(过滤器)属性</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="filter(过滤器)属性">
+    
+    
+      <meta 
+        property="og:url" 
+        content="http://example.com/2023/02/26/filter(%E8%BF%87%E6%BB%A4%E5%99%A8)%E5%B1%9E%E6%80%A7/index.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="https://img.songhn.com/img/Y67gdd.png">
+    
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2023-02-26">
+      <meta 
+        property="og:article:modified_time" 
+        content="2023-02-26">
+      <meta 
+        property="og:article:author" 
+        content="姜伟">
+      
+        
+      
+    
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  <link rel="preload" href="/css/main.css" as="style" >
+  
+  <link rel="modulepreload" href="//instant.page/5.1.0">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+  
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-logo-main" href="/">
+      
+      <span class="navbar-logo-dsc">博客</span>
+      </a>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          首页
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          归档
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          标签
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          分类
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          关于
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          友链
+        
+      </a>
+    
+    <button 
+      class="navbar-menu-item darknavbar navbar-menu-btn" 
+      aria-label="Toggle dark mode"
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </button>
+    <button 
+      class="navbar-menu-item searchnavbar navbar-menu-btn" 
+      aria-label="Toggle search"
+      id="search">
+      <!-- <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
+          d="M283.64 283.64L336 336"></path>
+      </svg>
+    </button>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="https://img.songhn.com/img/Y67gdd.png" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">姜伟</p>
+<p class="author-description"></p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>11</span>
+    <span>文章</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>4</span>
+    <span>分类</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>0</span>
+    <span>标签</span>
+  </a>
+</div>
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>分类
+  </div>
+  <div class="categories-list">
+    
+      <a href="/categories/React-Native/">
+        <div class="categories-list-item">
+          React-Native
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/CSS/">
+        <div class="categories-list-item">
+          CSS
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Vue2/">
+        <div class="categories-list-item">
+          Vue2
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/%E5%9F%BA%E9%87%91/">
+        <div class="categories-list-item">
+          基金
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>热门标签
+  </div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <main class="main-column">
+              
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      filter(过滤器)属性
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-02-25T16:00:00.000Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2023-02-26</span>
+    </time>
+    
+      <span class="dot"></span>
+      
+        <a 
+          href="/categories/CSS/" 
+          class="post-meta-link">
+          CSS
+        </a>
+      
+    
+    
+      <span class="dot"></span>
+      <span>971 字</span>
+    
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <blockquote>
+<p>前言: filter属性 我在日常开发用的并不多,但是我觉得很管用,有奇效,在一些特殊的样式上,你会觉得还可以这么简单就能实现.</p>
+</blockquote>
+<ol>
+<li>定义: filter 属性定义了元素(通常是img标签)的可视效果(例如：模糊与饱和度)。</li>
+<li>语法: filter: none | blur() | brightness() | contrast() | drop-shadow() | grayscale() | hue-rotate() | invert() | opacity() | saturate() | sepia() | url();</li>
+</ol>
+<hr>
+<ol>
+<li>blur 高斯模糊 (常用)</li>
+<li>brightness 亮度 (常用)</li>
+<li>contrast 对比度 (常用)</li>
+<li>drop-shadow 阴影 (重点)</li>
+<li>grayscale  灰度 (常用)</li>
+<li>hue-rotate 应用色相 (不常用)</li>
+<li>invert 反转输入图像 (不常用)</li>
+<li>opacity 透明度 (常用)</li>
+<li>saturate 图像饱和度  (不常用)</li>
+<li>sepia 将图像转换为深褐色 (常用)</li>
+<li>url (不用)</li>
+</ol>
+<hr>
+<blockquote>
+<p>blur</p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: blur(4px);</span><br></pre>
+<ol>
+<li>模糊度。默认为0, 值(px,不能写百分比)越大,越模糊.</li>
+</ol>
+<hr>
+<blockquote>
+<p>brightness </p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: brightness(200%);</span><br></pre>
+<ol>
+<li>亮度。默认为1&#x2F;100%, 图片没有变化,0是图片全黑,1是默认值颜色不变,值越大,图片越亮(即发白).</li>
+</ol>
+<hr>
+<blockquote>
+<p>contrast </p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: contrast(200%);</span><br></pre>
+<ol>
+<li>对比度。默认为1&#x2F;100%, 图片没有变化,0是图片全黑,1是默认值颜色不变,值越大,对比度(即绿色更绿.黄色更黄).</li>
+</ol>
+<hr>
+<blockquote>
+<p>drop-shadow 重点</p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: drop-shadow(8px 8px 10px red); </span><br></pre>
+<ol>
+<li>第一个参数(必填): X轴水平位置(8px,即阴影向右移8px,负值相反)</li>
+<li>第二个参数(必填): y轴水平位置(8px,即阴影向上移8px,负值相反)</li>
+<li>第三个参数(选填): 模糊度(默认为0,值需要大于0),值越大,越模糊</li>
+<li>第四个参数(选填): 阴影颜色</li>
+</ol>
+<hr>
+<p>ps:与box-shadow的区别: inset + spread + 阴影叠加</p>
+<pre class="highlight"><span class="line">语法: box-shadow: (inset,8px 8px 10px spread red); </span><br></pre>
+<ol>
+<li>inset: 不填写,默认是向外阴影,设置inset(即内部阴影)</li>
+<li>spread: 默认值0(阴影和元素尺寸一致),控制阴影的范围扩大(值 &gt; 0,值越大,阴影越大)或者缩小(值 &lt; 0,阴影搜索)</li>
+<li>阴影叠加: box-shadow值可以用逗号隔开,第一个层级(z-index)最高(8px(即阴影半径)),其次16px,最后24px.我们可以理解成一个圆心的靶子.</li>
+</ol>
+<pre class="highlight"><span class="line">box-shadow: 0 0 0 8px #f0f, </span><br><span class="line">			0 0 0 16px #d00, </span><br><span class="line">			0 0 0 24pxpx #cdd, </span><br></pre>
+
+<hr>
+<blockquote>
+<p>grayscale </p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: grayscale(50%);</span><br></pre>
+<ol>
+<li>灰度。默认为0(图像无变化),最大值100%(完全变灰色).</li>
+</ol>
+<hr>
+<blockquote>
+<p>hue-rotate</p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: hue-rotate(90deg);</span><br></pre>
+<ol>
+<li>给图像应用色相旋转。默认为0deg(图像没有变化),一圈(0deg-360deg)效果循环,基本找不出规律(除非你对颜色很有研究),随着值的变化,你可以看到,粉色,紫色,棕色,粉红色,橙色..各种美丽的颜色.</li>
+</ol>
+<hr>
+<blockquote>
+<p>invert</p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: invert(100%);</span><br></pre>
+<ol>
+<li>反转输入图像。默认为0(图像没有变化), 50%(灰色), 100%(医院拍CT的片子一样).</li>
+</ol>
+<hr>
+<blockquote>
+<p>opacity</p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: opacity(30%);</span><br></pre>
+<ol>
+<li>透明度。默认为0(图像没有变化), 最大值100%(完全透明),值越大,透明度越高.</li>
+</ol>
+<hr>
+<blockquote>
+<p>saturate</p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: saturate(800%);</span><br></pre>
+<ol>
+<li>转换图像饱和度。默认为100%(图像无变化), 0(完全不饱和),值越大,饱和度越大(即颜色越鲜艳).</li>
+</ol>
+<hr>
+<blockquote>
+<p>sepia</p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: sepia(100%);</span><br></pre>
+<ol>
+<li>将图像转换为深褐色。默认为0(图像无变化),最大值100%(完全变深褐色).</li>
+</ol>
+<hr>
+<blockquote>
+<p>url (没用过,不知道退役之前能不能用上)</p>
+</blockquote>
+<pre class="highlight"><span class="line">语法: filter: url(svg-url#element-id)</span><br></pre>
+<ol>
+<li>默认为0, 值(px,不能写百分比)越大,越模糊.</li>
+</ol>
+<hr>
+<blockquote>
+<p>日常前端开发需要注意的点</p>
+</blockquote>
+<ol>
+<li>grayscale,可以用在网页一些特殊日子,网页全部变成灰色</li>
+<li>drop-shadow 可以与box-shadow 可以按需求,交替&#x2F;对比使用,日常开发中,会有意想不到的效果.</li>
+<li>opacity(所有元素都具有透明度)&#x2F;rgba(背景出现透明效果，但上面的文字不透明)进行设置透明度,可以按需求,交替&#x2F;对比使用.</li>
+<li>sepia可以做成有年代感照片的效果.</li>
+</ol>
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            姜伟
+          </a>
+        </p>
+        <!-- <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="http://example.com/2023/02/26/filter(%E8%BF%87%E6%BB%A4%E5%99%A8)%E5%B1%9E%E6%80%A7/">
+            http://example.com/2023/02/26/filter(%E8%BF%87%E6%BB%A4%E5%99%A8)%E5%B1%9E%E6%80%A7/
+          </a>
+        </p> -->
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+    <div class="nav-item-prev">
+      <a 
+        href="/2023/07/23/%E5%9B%BD%E9%99%85%E5%8C%96(vue2%20+%20elementUI)/" 
+        class="nav-link">
+        <i class="iconfont icon-left nav-prev-icon"></i>
+        <div>
+          <div class="nav-label">上一篇</div>
+          
+            <div class="nav-title">国际化(vue2 + elementUI) </div>
+          
+        </div>
+      </a>
+    </div>
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/2023/02/18/flex%E5%B8%83%E5%B1%80/" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">下一篇</div>
+          
+            <div class="nav-title">flex弹性布局 </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+
+</div>
+            </main>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>最近文章
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-09-03</div>
+        <a href="/2023/09/03/%E4%B8%BB%E9%A2%98%E6%8D%A2%E8%82%A4/"><div class="recent-posts-item-content">主题换肤</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-08-27</div>
+        <a href="/2023/08/27/React%20Native%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA,%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA,%E5%BC%80%E5%8F%91%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91,%E6%89%93%E5%8C%85,%E5%8F%91%E5%B8%83/"><div class="recent-posts-item-content">RN 环境搭建,项目创建,开发中遇到的坑,打包,发布</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-08-20</div>
+        <a href="/2023/08/20/vue2%E4%B8%89%E4%B8%AA%E4%B8%BB%E8%A6%81%E6%96%87%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/"><div class="recent-posts-item-content">vue2 index.html / App.vue / main.js 三者作用</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-08-13</div>
+        <a href="/2023/08/13/vue2%E4%BC%A0%E5%80%BC%E7%9A%848%E7%A7%8D%E6%96%B9%E5%BC%8F/"><div class="recent-posts-item-content">vue2传值的8种方式</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2020
+          
+          
+                - 
+                2023
+          
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          博客
+        </a>
+      </div>
+    </div>
+
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+ 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+    
+      <script> 
+        loadScript('/js/lib/busuanzi.min.js') 
+      </script>
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+    
+    <script src="//instant.page/5.1.0" type="module"
+      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+    
+    
+      <script>
+        setTimeout(() => {localSearch("search.json")}, 0)
+      </script>
+    
+  </body>
+</html>
